@@ -3,13 +3,11 @@ public class Account {
     private double balance;
 
     public Account() {
-        System.out.println("Empty Account");
     }
 
     public Account(int accountNumber, double balance) {
         this.accountNumber = accountNumber;
         this.balance = balance;
-        System.out.println("Parameterized Account");
     }
 
     public void setAccountNumber(int accountNumber) {

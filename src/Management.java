@@ -1,12 +1,18 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class Management {
-    Scanner input = new Scanner(System.in);
-    Customer[] customers = new Customer[10];
-    private int numCustomer = 0;
+    Scanner input;
+    Customer[] customers;
+    private int numCustomer;
     Customer customer;
+    Random random;
 
     public Management() {
+        input = new Scanner(System.in);
+        random = new Random();
+        customers = new Customer[10];
+        numCustomer = 0;
     }
 
     public void run() {
@@ -92,9 +98,22 @@ public class Management {
         customer = findCustomer(name);
 
         if (customer != null) {
-            System.out.print("Enter Account Number: ");
-            int accountNumber = input.nextInt();
-            input.nextLine();
+            int accountNumber;
+            boolean isUnique;
+
+            do {
+                accountNumber = 100 + random.nextInt(900);
+                isUnique = true;
+
+                for (int i = 0; i < numCustomer; i++) {
+                    if (customers[i].hasAccount(accountNumber)) {
+                        isUnique = false;
+                        break;
+                    }
+                }
+            } while (!isUnique);
+
+            System.out.println("Assigned Account Number: " + accountNumber);
 
             System.out.print("Enter Balance: ");
             double balance = input.nextDouble();
@@ -227,8 +246,6 @@ public class Management {
         input.nextLine();
 
         customer.withdrawBalance(accountNumber, amount);
-
-        System.out.println("Successfully withdrawn: " + amount);
     }
 
     public void accountDetails() {
@@ -248,7 +265,7 @@ public class Management {
 
         System.out.println("----------------------");
 
-        System.out.println("Press Enter to Continue...");
+        System.out.print("Press Enter to Continue...");
         input.nextLine();
     }
 }

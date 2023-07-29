@@ -3,10 +3,10 @@ import java.util.Scanner;
 
 public class Management {
     Scanner input;
+    Random random;
     Customer[] customers;
     private int numCustomer;
     Customer customer;
-    Random random;
 
     public Management() {
         input = new Scanner(System.in);
@@ -22,39 +22,22 @@ public class Management {
             choice = input.nextInt();
             input.nextLine();
             switch (choice) {
-                case 1:
-                    newCustomer();
-                    break;
-                case 2:
-                    createAccount();
-                    break;
-                case 3:
-                    updateAccount();
-                    break;
-                case 4:
-                    deleteAccount();
-                    break;
-                case 5:
-                    depositBalance();
-                    break;
-                case 6:
-                    withdrawBalance();
-                    break;
-                case 7:
-                    accountDetails();
-                    break;
-                case 0:
-                    System.out.print("Exiting...");
-                    break;
-                default:
-                    System.out.println("Invalid choice.");
+                case 1 -> newCustomer();
+                case 2 -> createAccount();
+                case 3 -> updateAccount();
+                case 4 -> deleteAccount();
+                case 5 -> depositBalance();
+                case 6 -> withdrawBalance();
+                case 7 -> accountDetails();
+                case 0 -> System.out.print("Exiting...");
+                default -> System.out.println("Invalid choice.");
             }
         } while (choice != 0);
     }
 
     public void menu() {
         System.out.println("======================");
-        System.out.println("Bank Management Menu: ");
+        System.out.println("Bank Management Menu:");
         System.out.println("1. Register");
         System.out.println("2. Create Account");
         System.out.println("3. Update Account");
@@ -102,6 +85,7 @@ public class Management {
             boolean isUnique;
 
             do {
+                // Generate random numbers from 100 to 900
                 accountNumber = 100 + random.nextInt(900);
                 isUnique = true;
 
@@ -127,30 +111,25 @@ public class Management {
             input.nextLine();
 
             switch (accountType) {
-                case 1:
+                case 1 -> {
                     System.out.print("Enter Interest Rate: ");
                     double interest = input.nextDouble();
                     input.nextLine();
-
                     Account saving = new Saving(accountNumber, balance, interest);
                     customer.addAccount(saving);
-
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.print("Enter Year: ");
                     int year = input.nextInt();
                     input.nextLine();
-
                     Account fixed = new Fixed(accountNumber, balance, year);
                     customer.addAccount(fixed);
-
-                    break;
-                default:
-                    System.out.println("Invalid Type");
-
+                }
+                default -> System.out.println("Invalid Type");
             }
+            System.out.println("Account creation was successful.");
         } else {
-            System.out.println("Customer not found.");
+            System.out.println("Customer with name \"" + name + "\" doesn't exist. Please Register First.");
         }
     }
 
@@ -207,7 +186,6 @@ public class Management {
         int accountNumber = input.nextInt();
         input.nextLine();
         customer.deleteAccount(accountNumber);
-        System.out.println("Deleted Account: " + accountNumber);
     }
 
     public void depositBalance() {
@@ -226,8 +204,6 @@ public class Management {
         input.nextLine();
 
         customer.depositBalance(accountNumber, amount);
-
-        System.out.println("Successfully deposited: " + amount);
     }
 
     public void withdrawBalance() {
@@ -258,7 +234,7 @@ public class Management {
         customer = findCustomer(name);
 
         if (customer == null) {
-            System.out.println("No customer found with given name.");
+            System.out.println("No customer found with the given name.");
         } else {
             customer.details();
         }

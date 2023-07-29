@@ -44,11 +44,17 @@ public class Customer {
     }
 
     public void deleteAccount(int accountNumber) {
+        boolean isDeleted = false;
         for (int i = 0; i < accounts.length; i++) {
             if (accounts[i] != null && accounts[i].getAccountNumber() == accountNumber) {
                 accounts[i] = null;
+                isDeleted = true;
+                System.out.println("Deleted Account: " + accountNumber);
                 break;
             }
+        }
+        if (!isDeleted) {
+            System.out.println("Error: Invalid Account Number.");
         }
     }
 
@@ -57,6 +63,7 @@ public class Customer {
             if (accounts[i] != null && accounts[i].getAccountNumber() == accountNumber) {
                 double balance = accounts[i].getBalance() + amount;
                 accounts[i].setBalance(balance);
+                System.out.println("Successfully deposited: " + amount);
                 break;
             }
         }
